@@ -31,9 +31,16 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
     localStorage.setItem('userActualPosition', result.data.position || '');  // Add this line
             
             // Redirect with user information in URL parameters
-              setTimeout(() => {
-        window.location.href = `window.html?username=${encodeURIComponent(username)}&name=${encodeURIComponent(result.data.name || username)}&position=${encodeURIComponent(result.data.position || 'Maintenance Staff')}`;
-    }, 1000);
+setTimeout(() => {
+    let targetPage = "window.html";
+
+    // Check username
+    if (username.toLowerCase() === "stock") {
+        targetPage = "StockTest.html";
+    }
+
+    window.location.href = `${targetPage}?username=${encodeURIComponent(username)}&name=${encodeURIComponent(result.data.name || username)}&position=${encodeURIComponent(result.data.position || 'Maintenance Staff')}`;
+}, 1000);
 } else {
             statusElement.className = "error";
             statusElement.textContent = result.message || "Invalid username or password";
